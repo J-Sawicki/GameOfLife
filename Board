@@ -1,0 +1,135 @@
+import java.util.Scanner;
+
+public class Board {
+    private int size;
+    private Cell[][] board;
+    Scanner scanner = new Scanner(System.in);
+
+    public Board(int size) {
+        this.size = size;
+        this.board = new Cell[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board[i][j] = new Cell();
+            }
+        }
+    }
+
+    private void initializeGame() {
+        System.out.println("Select number of starting cells: ");
+        int number = scanner.nextInt();
+        scanner.nextLine();
+        int x, y;
+        for (int i = 0; i < number; i++) {
+            System.out.println("Select first coordinate for cell number " + (i+1));
+            x = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Select second coordinate for cell number " + (i+1));
+            y = scanner.nextInt();
+            scanner.nextLine();
+            this.board[x][y].setAlive(true);
+        }
+    }
+
+    public void Life() {
+        initializeGame();
+        printBoard();
+        String go;
+        System.out.println("Press enter to continue");
+        go = scanner.nextLine();
+        boolean flag = true;
+        while (flag) {
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (board[i][j].isAlive()) {
+                        if (checker(i, j) > 3 || checker(i, j) < 2) {
+                            board[i][j].setDying(true);
+                        }
+                    } else {
+                        if (checker(i, j) == 3) {
+                            board[i][j].setBorn(true);
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i< size; i++){
+                for (int j = 0; j<size; j++){
+                    if (board[i][j].isDying()){
+                        board[i][j].setAlive(false);
+                        board[i][j].setDying(false);
+                    }
+                    if (board[i][j].isBorn()){
+                        board[i][j].setAlive(true);
+                        board[i][j].setBorn(false);
+                    }
+                }
+            }
+            printBoard();
+            System.out.println("Press enter to continue");
+            go = scanner.nextLine();
+            if (go.equals("stop")){
+                flag = false;
+            }
+        }
+    }
+
+    private void printBoard() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[i][j].isAlive()) {
+                    System.out.print("O");
+                } else {
+                    System.out.print("x");
+                }
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+
+    private int checker(int x, int y) {
+        int sum = 0;
+        if (x != 0 && y != 0) {
+            if (board[x - 1][y - 1].isAlive()) {
+                sum++;
+            }
+        }
+        if (x != 0) {
+            if (board[x - 1][y].isAlive()) {
+                sum++;
+            }
+        }
+        if (x!= 0 && y != size-1) {
+            if (board[x - 1][y + 1].isAlive()) {
+                sum++;
+            }
+        }
+        if (y != 0) {
+            if (board[x][y - 1].isAlive()) {
+                sum++;
+            }
+        }
+        if (y!=size-1) {
+            if (board[x][y + 1].isAlive()) {
+                sum++;
+            }
+        }
+        if (x!=size-1 && y!= 0) {
+            if (board[x + 1][y - 1].isAlive()) {
+                sum++;
+            }
+        }
+        if (x!= size-1) {
+            if (board[x + 1][y].isAlive()) {
+                sum++;
+            }
+        }
+        if (x!=size-1 && y!= size-1) {
+            if (board[x + 1][y + 1].isAlive()) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+}
