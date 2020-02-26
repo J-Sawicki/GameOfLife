@@ -1,0 +1,35 @@
+public class Cell {
+    private boolean isAlive;
+    private boolean isDying;
+    private boolean isBorn;
+
+    public Cell() {
+        this.isAlive = false;
+        this.isDying = false;
+        this.isBorn = false;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public boolean isDying() {
+        return isDying;
+    }
+
+    public void setDying(boolean dying) {
+        isDying = dying;
+    }
+
+    public boolean isBorn() {
+        return isBorn;
+    }
+
+    public void setBorn(boolean born) {
+        isBorn = born;
+    }
+}
