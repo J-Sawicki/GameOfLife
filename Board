@@ -54,14 +54,7 @@ public class Board {
             }
             for (int i = 0; i< size; i++){
                 for (int j = 0; j<size; j++){
-                    if (board[i][j].isDying()){
-                        board[i][j].setAlive(false);
-                        board[i][j].setDying(false);
-                    }
-                    if (board[i][j].isBorn()){
-                        board[i][j].setAlive(true);
-                        board[i][j].setBorn(false);
-                    }
+                    changer(board[i][j]);
                 }
             }
             printBoard();
@@ -84,6 +77,17 @@ public class Board {
                 System.out.print(" ");
             }
             System.out.println();
+        }
+    }
+    
+    private void changer (Cell cell){
+        if (cell.isDying()){
+            cell.setAlive(false);
+            cell.setDying(false);
+        }
+        if (cell.isBorn()){
+            cell.setAlive(true);
+            cell.setBorn(false);
         }
     }
 
